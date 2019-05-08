@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var kdminum = $("#kdminum").val();
+            var nmminum = $("#nmminum").val();
+            var harga = $("#harga").val();
+            var dataString = "&kdminum=" + kdminum + "&nmminum=" + nmminum + "&harga=" + harga + "&insert=";
+            if ($.trim(kdminum).length > 0 & $.trim(nmminum).length > 0 & $.trim(harga).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://mfardan.000webhostapp.com/uts/www/insert.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("done");
+                            $("#insert").val('submit');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <h1 class="kdminum">Insert Database</h1>
+        <a class="button button-clear" href="readjson.html">Lihat Data</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="list">
+        <input type="hidden" id="id" value="" />
+        <div class="item">
+            <label>Kode Minuman</label>
+            <input type="text" id="kdminum" value="" />
+        </div>
+        <div class="item">
+            <label>Nama Minuman</label>
+            <input type="text" id="nmminum" value="" />
+        </div>
+        <div class="item">
+            <label>Harga</label>
+            <input type="text" id="harga" value="" />
+        </div>
+        <div class="item">
+            <input type="button" id="insert" class="button button-block" value="Klik Disini" />
+        </div>
+    </div>
+</body>
+
+</html>
